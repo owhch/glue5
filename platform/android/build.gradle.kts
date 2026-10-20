@@ -30,7 +30,12 @@ android {
         versionName = "0.1.0"
         ndk { abiFilters += "arm64-v8a" }
     }
-
+    signingConfigs.getByName("debug") {
+        storeFile = file(System.getProperty("user.home") + "/.android/debug.keystore")
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
+    }
     buildTypes {
         release {
             // For development devices, as the iOS app: the debug key.
