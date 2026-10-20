@@ -74,7 +74,9 @@ jobs:
           mkdir -p ~/.android
           cd ~/.android && "$GITHUB_WORKSPACE/.github/scripts/draft.sh" get "${{ steps.game.outputs.release }}" Glue5-android.keystore
           if [ -f Glue5-android.keystore ]; then mv Glue5-android.keystore debug.keystore; fi
-
+          if [ ! -f debug.keystore ]; then
+            keytool -genkeypair -keystore debug.keystore -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          fi
       - name: Build
         run: |
           case $PLATFORM in
